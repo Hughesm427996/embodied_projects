@@ -1,0 +1,22 @@
+diff --git a/server.py b/server.py
+index 8c46f7a..e92d48b 100644
+--- a/server.py
++++ b/server.py
+@@ -1860,7 +1860,7 @@ def on_ai_task(data):
+                     output = {}
+                 thinking = output.get("thinking", "")
+                 decision = output.get("decision", "")
+-                action = output.get("action", {})
++                action = output.get("action") or {}
+                 progress = output.get("goal_progress", "")
+                 reflection = output.get("reflection")
+                 # 新事件：结构化思考链，前端展示每轮卡片
+@@ -2247,7 +2247,7 @@ def _run_agent_loop(goal, sid):
+             thinking = output.get("thinking", "")
+             decision = output.get("decision", "")
+             progress = output.get("goal_progress", "")
+-            action = output.get("action", {})
++            action = output.get("action") or {}
+             reflection = output.get("reflection")
+             # 新事件：结构化思考链
+             socketio.emit("ai_thought", {

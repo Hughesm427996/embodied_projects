@@ -1,0 +1,6 @@
+[Bb]uild/
+[Cc]ache/
+[Uu]ser/
+_savebackup/
+CMakeUserPresets.json
+install/

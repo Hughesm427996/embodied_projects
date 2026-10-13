@@ -1,0 +1,24 @@
+{
+  "snapshot_date": "2026-10-10",
+  "purpose": "Clean replacement Git backup for lab 2080",
+  "projects": [
+    {
+      "name": "AerialClaw",
+      "path": "projects/AerialClaw",
+      "status": "Official simulation flow and three preset tasks verified; see project report."
+    },
+    {
+      "name": "RAI",
+      "path": "projects/RAI",
+      "source": "/home/xiaoyu/rai",
+      "status": "Imported from 2080; reproduction results have not been independently validated by this backup script.",
+      "files": 920,
+      "imported_utc": "2026-10-10T11:55:56.523295+00:00"
+    }
+  ],
+  "excluded_from_new_history": [
+    "AgentChord",
+    "OpenRAL"
+  ],
+  "rai_excluded_file_count": 4
+}

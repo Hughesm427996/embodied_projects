@@ -1,0 +1,34 @@
+{
+  "collected_at": "2026-09-14T18:24:04.894534+08:00",
+  "official_task": "起飞到12米，向东飞30米，观察前方，然后返回起飞点降落",
+  "planner": "DeepSeek deepseek-chat",
+  "vision": "Doubao Ark endpoint ep-20260818223702-6gbfx",
+  "result": "PASS",
+  "verified_steps": [
+    "takeoff → OK",
+    "fly_to → OK",
+    "observe → OK",
+    "return_to_launch → OK",
+    "目标达成"
+  ],
+  "final_px4_state": {
+    "armed": false,
+    "battery_percent": 100.0,
+    "in_air": false,
+    "mode": "HOLD",
+    "position_ned": [
+      -0.1510235071182251,
+      -0.14149292558431625,
+      0.2393243908882141
+    ]
+  },
+  "camera_bytes": 10078,
+  "files": [
+    "adapter-status-final.json",
+    "front-camera-final.jpg",
+    "official-demo-1.log",
+    "patrol_report_20260914_182237.html",
+    "sensor-status-final.json",
+    "system-status-final.json"
+  ]
+}

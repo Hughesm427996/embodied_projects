@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0e17">
+<title>AerialClaw BodySense</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0e17;color:#e0e0e0;font-family:-apple-system,'SF Pro','Helvetica Neue',sans-serif;min-height:100vh;padding:12px}
+.header{text-align:center;padding:16px 0 8px}
+.header h1{font-size:20px;color:#00d4ff;font-weight:600}
+.header .sub{font-size:12px;color:#666;margin-top:4px}
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#111827;border-radius:8px;margin:8px 0;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
+.dg{background:#22c55e;box-shadow:0 0 6px #22c55e}.dr{background:#ef4444;box-shadow:0 0 6px #ef4444}
+.card{background:#111827;border-radius:12px;padding:16px;margin:8px 0;border:1px solid #1e293b}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ct{font-size:14px;font-weight:600;color:#94a3b8}.cv{font-size:24px;font-weight:700;color:#fff}
+.po{background:#1e293b;border-radius:6px;height:12px;overflow:hidden;margin:8px 0}
+.pi{height:100%;border-radius:6px;transition:width .3s,background .3s}
+.pl{background:linear-gradient(90deg,#22c55e,#4ade80)}.pm{background:linear-gradient(90deg,#eab308,#facc15)}.ph{background:linear-gradient(90deg,#ef4444,#f87171)}
+.cg{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px}
+.cc{text-align:center;padding:4px 2px;border-radius:4px;font-size:10px;color:#fff;font-weight:600;white-space:pre}
+.ns{display:flex;gap:16px;margin:8px 0}.nsi{flex:1;text-align:center}
+.nsi .d{font-size:11px;color:#666}.nsi .v{font-size:18px;font-weight:700;margin-top:2px}
+.uc{color:#22c55e}.dc{color:#60a5fa}
+.ir{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e293b;font-size:13px}
+.ir:last-child{border-bottom:none}.il{color:#64748b}.iv{color:#e2e8f0;font-weight:500}
+.ab{padding:10px 14px;border-radius:8px;margin:4px 0;font-size:13px}
+.aok{background:#052e16;border:1px solid #16a34a;color:#86efac}
+.aw{background:#422006;border:1px solid #d97706;color:#fcd34d}
+.ac{background:#450a0a;border:1px solid #dc2626;color:#fca5a5}
+.ls{background:#0f172a;border:1px solid #1e40af;border-radius:8px;padding:12px;margin:8px 0;font-size:12px;color:#93c5fd;font-family:'SF Mono','Menlo',monospace;word-break:break-all;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🖥️ AerialClaw BodySense</h1>
+  <div class="sub" id="devname">连接中...</div>
+</div>
+<div class="sbar">
+  <span><span class="dot dg" id="sdot"></span><span id="stxt">在线</span></span>
+  <span id="utime">--</span>
+</div>
+
+<!-- CPU -->
+<div class="card">
+  <div class="ch"><span class="ct">🧠 CPU</span><span class="cv" id="cpuP">--%</span></div>
+  <div class="po"><div class="pi pl" id="cpuB" style="width:0%"></div></div>
+  <div class="ir"><span class="il">核心</span><span class="iv" id="cpuC">--</span></div>
+  <div class="ir"><span class="il">负载 (1/5/15m)</span><span class="iv" id="cpuL">--</span></div>
+  <div class="cg" id="cg"></div>
+</div>
+
+<!-- Memory -->
+<div class="card">
+  <div class="ch"><span class="ct">💾 内存</span><span class="cv" id="memP">--%</span></div>
+  <div class="po"><div class="pi pl" id="memB" style="width:0%"></div></div>
+  <div class="ir"><span class="il">已用 / 总量</span><span class="iv" id="memU">--</span></div>
+  <div class="ir"><span class="il">可用</span><span class="iv" id="memA">--</span></div>
+  <div class="ir"><span class="il">Swap</span><span class="iv" id="memS">--</span></div>
+</div>
+
+<!-- Disk -->
+<div class="card">
+  <div class="ch"><span class="ct">💿 磁盘</span><span class="cv" id="dskP">--%</span></div>
+  <div class="po"><div class="pi pl" id="dskB" style="width:0%"></div></div>
+  <div class="ir"><span class="il">空闲</span><span class="iv" id="dskF">--</span></div>
+  <div class="ir"><span class="il">I/O</span><span class="iv" id="dskIO">--</span></div>
+</div>
+
+<!-- Network -->
+<div class="card">
+  <div class="ch"><span class="ct">🌐 网络</span></div>
+  <div class="ns">
+    <div class="nsi"><div class="d">▲ 上行</div><div class="v uc" id="netU">--</div></div>
+    <div class="nsi"><div class="d">▼ 下行</div><div class="v dc" id="netD">--</div></div>
+  </div>
+  <div class="ir"><span class="il">接口</span><span class="iv" id="netI">--</span></div>
+  <div class="ir"><span class="il">WiFi</span><span class="iv" id="netW">--</span></div>
+</div>
+
+<!-- Thermal -->
+<div class="card">
+  <div class="ch"><span class="ct">🌡️ 温度</span><span class="cv" id="tmpV">--</span></div>
+</div>
+
+<!-- USB -->
+<div class="card">
+  <div class="ch"><span class="ct">🔌 USB</span><span class="cv" id="usbN">0</span></div>
+  <div id="usbL"></div>
+</div>
+
+<!-- Alerts -->
+<div id="alerts"><div class="ab aok" id="abx">✅ 所有系统正常</div></div>
+
+<!-- LLM Summary -->
+<div class="card">
+  <div class="ct" style="margin-bottom:8px">🤖 LLM 感知摘要</div>
+  <div class="ls" id="llms">等待数据...</div>
+</div>
+
+<div style="text-align:center;padding:16px;font-size:11px;color:#333">
+  AerialClaw BodySense · 实时刷新 1s
+</div>
+
+<script>
+const H=window.location.origin;
+function fb(b){if(b>=1e9)return(b/1e9).toFixed(1)+'GB';if(b>=1e6)return(b/1e6).toFixed(0)+'MB';if(b>=1e3)return(b/1e3).toFixed(0)+'KB';return b+'B'}
+function fs(s){if(s>=1e6)return(s/1e6).toFixed(1)+'MB/s';if(s>=1e3)return(s/1e3).toFixed(0)+'KB/s';return s.toFixed(0)+'B/s'}
+function pc(p){return p>=85?'ph':p>=60?'pm':'pl'}
+function cc(p){return p>=80?'#ef4444':p>=50?'#eab308':p>=20?'#22c55e':'#1e293b'}
+
+async function poll(){
+  try{
+    const r=await fetch(H+'/api/body/snapshot');
+    const d=await r.json();
+    if(!d.ok)return;
+    const m=d.monitors||{};
+
+    document.getElementById('sdot').className='dot '+(d.healthy?'dg':'dr');
+    document.getElementById('stxt').textContent=d.healthy?'正常':'异常';
+    document.getElementById('utime').textContent=new Date().toLocaleTimeString();
+    document.getElementById('devname').textContent='Mac mini M4 · '+(d.monitor_count||0)+' 监控器 · 1Hz';
+
+    // CPU
+    const cpu=(m.cpu||{}).data||{};
+    const cp=cpu.total_percent||0;
+    document.getElementById('cpuP').textContent=cp.toFixed(0)+'%';
+    const cb=document.getElementById('cpuB');cb.style.width=cp+'%';cb.className='pi '+pc(cp);
+    const pC=cpu.p_cores||0,eC=cpu.e_cores||0;
+    document.getElementById('cpuC').textContent=pC?pC+'P+'+eC+'E = '+(cpu.cores_total||0)+'核':(cpu.cores_total||0)+'核';
+    document.getElementById('cpuL').textContent=(cpu.load_1m||0).toFixed(1)+' / '+(cpu.load_5m||0).toFixed(1)+' / '+(cpu.load_15m||0).toFixed(1);
+    const cg=document.getElementById('cg');cg.innerHTML='';
+    (cpu.per_cpu_percent||[]).forEach((p,i)=>{
+      const c=document.createElement('div');c.className='cc';c.style.background=cc(p);
+      c.textContent=(i<pC?'P':'E')+i+'\n'+p.toFixed(0)+'%';cg.appendChild(c);
+    });
+
+    // Memory
+    const mem=(m.memory||{}).data||{};
+    const mp=mem.percent||0;
+    document.getElementById('memP').textContent=mp.toFixed(0)+'%';
+    const mb=document.getElementById('memB');mb.style.width=mp+'%';mb.className='pi '+pc(mp);
+    document.getElementById('memU').textContent=fb(mem.used_bytes||0)+' / '+fb(mem.total_bytes||0);
+    document.getElementById('memA').textContent=fb(mem.available_bytes||0);
+    document.getElementById('memS').textContent=fb(mem.swap_used||0)+' / '+fb(mem.swap_total||0)+' ('+(mem.swap_percent||0).toFixed(0)+'%)';
+
+    // Disk
+    const dsk=(m.disk||{}).data||{};
+    const dp=dsk.percent||0;
+    document.getElementById('dskP').textContent=dp.toFixed(0)+'%';
+    const db=document.getElementById('dskB');db.style.width=dp+'%';db.className='pi '+pc(dp);
+    document.getElementById('dskF').textContent=fb(dsk.free_bytes||0);
+    document.getElementById('dskIO').textContent='R '+fs(dsk.read_bytes_sec||0)+' / W '+fs(dsk.write_bytes_sec||0);
+
+    // Network
+    const net=(m.network||{}).data||{};
+    document.getElementById('netU').textContent=fs(net.up_bytes_sec||0);
+    document.getElementById('netD').textContent=fs(net.down_bytes_sec||0);
+    const ifaces=Object.entries(net.interfaces||{}).map(([k,v])=>k+': '+v).join(', ');
+    document.getElementById('netI').textContent=ifaces||'无';
+    const rssi=net.wifi_rssi_dbm;const ssid=net.wifi_ssid;
+    document.getElementById('netW').textContent=rssi?rssi+'dBm'+(ssid?' ('+ssid+')':''):'有线连接';
+
+    // Thermal
+    const tmp=(m.thermal||{}).data||{};
+    const temps=tmp.temperatures||{};
+    const tw=temps.thermal_warning;
+    const tl=temps.thermal_level;
+    const tcpu=temps.cpu||temps['cpu die'];
+    if(tcpu)document.getElementById('tmpV').textContent=tcpu.toFixed(0)+'°C';
+    else if(tw!==undefined)document.getElementById('tmpV').textContent=tw==0?'散热正常':'⚠️过热';
+    else if(tl!==undefined)document.getElementById('tmpV').textContent='L'+tl;
+    else document.getElementById('tmpV').textContent='正常';
+
+    // USB
+    const usb=(m.usb||{}).data||{};
+    document.getElementById('usbN').textContent=usb.count||0;
+    const ul=document.getElementById('usbL');ul.innerHTML='';
+    (usb.devices||[]).forEach(d=>{
+      const div=document.createElement('div');div.className='ir';
+      div.innerHTML='<span class="il">'+d.name+'</span><span class="iv">'+(d.vendor||'')+'</span>';
+      ul.appendChild(div);
+    });
+    if(!usb.count)ul.innerHTML='<div style="font-size:12px;color:#444;padding:4px 0">无 USB 设备</div>';
+
+    // Alerts
+    const als=d.alerts||[];
+    const abx=document.getElementById('abx');
+    const crit=als.filter(a=>a.level==='critical');
+    const warn=als.filter(a=>a.level==='warning');
+    if(crit.length){abx.className='ab ac';abx.textContent='🚨 '+crit[crit.length-1].message;}
+    else if(warn.length){abx.className='ab aw';abx.textContent='⚠️ '+warn[warn.length-1].message;}
+    else{abx.className='ab aok';abx.textContent='✅ 所有系统正常';}
+
+  }catch(e){
+    document.getElementById('sdot').className='dot dr';
+    document.getElementById('stxt').textContent='断开';
+  }
+
+  // LLM summary
+  try{
+    const r2=await fetch(H+'/api/body/summary');
+    const d2=await r2.json();
+    if(d2.ok)document.getElementById('llms').textContent=d2.summary;
+  }catch(e){}
+}
+
+setInterval(poll,1000);
+poll();
+</script>
+</body>
+</html>

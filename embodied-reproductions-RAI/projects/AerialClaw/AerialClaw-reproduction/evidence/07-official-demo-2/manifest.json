@@ -1,0 +1,45 @@
+{
+  "collected_at": "2026-09-16T13:33:41.726181+08:00",
+  "official_task": "起飞到15米，飞到坐标[-30, 40, -15]，寻找地面亮红色发光物体，向下观察后报告位置和周围物体",
+  "planner": "DeepSeek deepseek-chat",
+  "vision": "Doubao Ark endpoint ep-20260818223702-6gbfx",
+  "result": "PASS_WITH_RECOVERY",
+  "verified_steps": [
+    "takeoff → OK",
+    "fly_to → OK",
+    "observe → OK",
+    "mark_location → OK",
+    "report → OK",
+    "目标达成"
+  ],
+  "reported_target_position_ned": [
+    -31.85,
+    38.16,
+    -12.83
+  ],
+  "completed_airborne_as_requested": true,
+  "known_nonblocking_failures": [
+    "one anti-loop interception for repeated change_altitude",
+    "perceive returned adapter unavailable; planner recovered with observe"
+  ],
+  "px4_state_at_completion": {
+    "armed": true,
+    "battery_percent": 68.0,
+    "in_air": true,
+    "mode": "OFFBOARD",
+    "position_ned": [
+      -32.68544116616249,
+      37.74625764787197,
+      -12.808613777160645
+    ]
+  },
+  "camera_bytes": 10974,
+  "files": [
+    "adapter-status-at-completion.json",
+    "down-camera-at-completion.jpg",
+    "official-demo-2.log",
+    "patrol_report_20260916_133137.html",
+    "sensor-status-at-completion.json",
+    "system-status-at-completion.json"
+  ]
+}

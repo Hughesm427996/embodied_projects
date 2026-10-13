@@ -1,0 +1,67 @@
+{
+  "cameras": {
+    "down": {
+      "direction": "down",
+      "fps": 3.2857247214259515,
+      "frame_count": 616,
+      "height": 480,
+      "last_ts": 1789380908.6498792,
+      "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_down_link/sensor/cam_down/image",
+      "width": 640
+    },
+    "front": {
+      "direction": "front",
+      "fps": 3.283519029075708,
+      "frame_count": 616,
+      "height": 480,
+      "last_ts": 1789380908.5716352,
+      "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_front_link/sensor/cam_front/image",
+      "width": 640
+    },
+    "left": {
+      "direction": "left",
+      "fps": 3.2894715326246007,
+      "frame_count": 616,
+      "height": 480,
+      "last_ts": 1789380908.6089413,
+      "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_left_link/sensor/cam_left/image",
+      "width": 640
+    },
+    "rear": {
+      "direction": "rear",
+      "fps": 3.2800941883430585,
+      "frame_count": 616,
+      "height": 480,
+      "last_ts": 1789380908.5914612,
+      "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_rear_link/sensor/cam_rear/image",
+      "width": 640
+    },
+    "right": {
+      "direction": "right",
+      "fps": 3.289350929640911,
+      "frame_count": 616,
+      "height": 480,
+      "last_ts": 1789380908.634399,
+      "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_right_link/sensor/cam_right/image",
+      "width": 640
+    }
+  },
+  "last_error": "",
+  "lidar": {
+    "fps": 17.57674319404367,
+    "frame_count": 3731,
+    "last_ts": 1789380908.7236545,
+    "topic": "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/link/sensor/lidar_2d_v2/scan"
+  },
+  "model": "x500_lidar_2d_cam_0",
+  "running": true,
+  "subscriptions": [
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_front_link/sensor/cam_front/image",
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_rear_link/sensor/cam_rear/image",
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_left_link/sensor/cam_left/image",
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_right_link/sensor/cam_right/image",
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_down_link/sensor/cam_down/image",
+    "/world/urban_rescue/model/x500_lidar_2d_cam_0/link/link/sensor/lidar_2d_v2/scan"
+  ],
+  "world": "urban_rescue"
+}

@@ -1,0 +1,27 @@
+{
+  "collected_at": "2026-09-14T18:19:38.010093+08:00",
+  "goal": "takeoff 5 m -> Doubao VLM observe front -> report -> land",
+  "planner": "DeepSeek deepseek-chat",
+  "vision": "Doubao Ark endpoint ep-20260818223702-6gbfx",
+  "result": "PASS",
+  "final_px4_state": {
+    "armed": false,
+    "battery_percent": 100.0,
+    "in_air": false,
+    "mode": "HOLD",
+    "position_ned": [
+      -0.15781861543655396,
+      -0.11969035118818283,
+      0.13668856024742126
+    ]
+  },
+  "camera_bytes": 9879,
+  "files": [
+    "adapter-status-after.json",
+    "ai-flight-task.log",
+    "front-camera-after-landing.jpg",
+    "patrol_report_20260914_181642.html",
+    "sensor-status-after.json",
+    "system-status-after.json"
+  ]
+}

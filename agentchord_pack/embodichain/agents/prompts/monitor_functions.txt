@@ -1,0 +1,60 @@
+All monitor functions are designed to be passed into `drive(..., monitor_sequences=[...])`.
+Each monitor function returns:
+- `True`: the monitor is triggered and the failure condition is detected
+- `False`: the monitor is not triggered and the failure condition is not detected
+
+When wrapping a monitor with `partial`, pass the function object itself, for example:
+`partial(monitor_object_moved, obj_name="cup", threshold=0.02)`
+
+1. `monitor_object_moved`
+Purpose:
+- Detect whether a rigid object has moved from the last frame by more than a translation threshold.
+
+Typical failure meanings:
+- object was unexpectedly pushed
+- object shifted during grasping
+- placed object slid away
+
+Signature:
+- `monitor_object_moved(env, obj_name, last_frame_pose=None, threshold=0.01, **kwargs)`
+
+Key arguments:
+- `obj_name`: target rigid object name, such as `"cup"` or `"bottle"`
+- `last_frame_pose`: previous-frame pose; if not provided, it falls back to `env.obj_info[obj_name]["pose"]`. Typically, no need to provide
+- `threshold`: maximum allowed position change in meters
+
+Returns `True` when:
+- the Euclidean distance between current object position and previous object position is greater than `threshold`
+
+Recommended use:
+- use when the arm attempts to grasp an object, where the object is expected to be stationary
+- do not use this function while intentionally moving a grasped object, as object movement is expected and does not necessarily indicate a failure
+
+2. `monitor_object_held`
+Purpose:
+- Detect whether a held object is likely lost by checking the current gripper opening distance.
+
+Typical failure meanings:
+- object slipped out of hand
+- grasp was lost
+- the gripper closed too far, suggesting nothing remains between the fingers
+
+Signature:
+- `monitor_object_held(env, robot_name, obj_name=None, threshold=0.01, **kwargs)`
+
+Key arguments:
+- `robot_name`: arm identifier containing `"left"` or `"right"`
+- `obj_name`: optional target rigid object name, used by recovery graph context
+- `threshold`: minimum expected gripper opening distance while holding
+
+Returns `True` when:
+- the selected gripper's current opening distance is smaller than `threshold`
+- in other words, hold loss is detected
+
+Important note:
+- `True` always means trigger / failure occurred
+- this monitor uses current gripper distance, not object-arm distance
+
+Recommended use:
+- use when the object should already be grasped in the arm
+- do not use during the initial grasp phase before the object is expected to be held

@@ -1,0 +1,24 @@
+[project]
+name = "rai-bench"
+version = "0.3.0"
+description = "Package for running and creating benchmarks."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Jakub Matejczyk", email = "jakub.matejczyk@robotec.ai" },
+    { name = "Magdalena Kotynia", email = "magdalena.kotynia@robotec.ai" },
+]
+dependencies = [
+    "inflect==7.5.0",
+    "plotly>=6.0.1,<7.0.0",
+    "rai_core>=2.0.0a2,<3.0.0",
+    "rai_sim>=0.0.2,<1.0.0",
+]
+
+[tool.uv.build-backend]
+module-root = ""
+module-name = "rai_bench"
+
+[build-system]
+requires = ["uv_build>=0.11.3,<0.12"]
+build-backend = "uv_build"

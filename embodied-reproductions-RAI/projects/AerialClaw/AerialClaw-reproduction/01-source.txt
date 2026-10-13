@@ -1,0 +1,7 @@
+Repository=https://github.com/XDEI-Group/AerialClaw.git
+Clone=depth-1 filter=blob-none sparse
+Branch=main
+Commit=
+e01adaa73c38fb10ec4bc5e8c0f71915cc7490a8
+ClonedAt=
+2026-09-11T21:46:43.2876626+08:00

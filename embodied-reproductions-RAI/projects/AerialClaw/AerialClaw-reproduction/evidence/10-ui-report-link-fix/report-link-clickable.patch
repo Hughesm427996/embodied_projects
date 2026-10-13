@@ -1,0 +1,55 @@
+diff --git a/ui/src/components/AiPanel.jsx b/ui/src/components/AiPanel.jsx
+index 17b47f4..fea11c7 100644
+--- a/ui/src/components/AiPanel.jsx
++++ b/ui/src/components/AiPanel.jsx
+@@ -9,6 +9,41 @@ const EXAMPLE_TASKS = [
+   '飞到东南废墟区上空，在NED(-30,40)、(-50,60)、(-25,55)三个点各停留观察一次，记录地面物体颜色和形状，返航汇总报告',
+ ]
+ 
++const PATROL_REPORT_LINK_RE = /\[([^\]]+)\]\((\/reports\/patrol_report_\d{8}_\d{6}\.html)\)/g
++
++function ChatMessageContent({ content }) {
++  const text = typeof content === 'string' ? content : String(content ?? '')
++  const parts = []
++  let cursor = 0
++  let match
++
++  PATROL_REPORT_LINK_RE.lastIndex = 0
++  while ((match = PATROL_REPORT_LINK_RE.exec(text)) !== null) {
++    if (match.index > cursor) parts.push(text.slice(cursor, match.index))
++    parts.push(
++      <a
++        key={`${match.index}-${match[2]}`}
++        href={match[2]}
++        target="_blank"
++        rel="noopener noreferrer"
++        style={{
++          color: '#60a5fa',
++          fontWeight: 600,
++          textDecoration: 'underline',
++          textUnderlineOffset: 2,
++        }}
++      >
++        {match[1]}
++      </a>,
++    )
++    cursor = match.index + match[0].length
++  }
++
++  if (cursor === 0) return text
++  if (cursor < text.length) parts.push(text.slice(cursor))
++  return parts
++}
++
+ export default function AiPanel({
+   mode,
+   isExecuting,
+@@ -235,7 +270,7 @@ export default function AiPanel({
+                       ? '1px solid rgba(124,58,237,.3)'
+                       : '1px solid var(--border)',
+                   }}>
+-                    {msg.content}
++                    <ChatMessageContent content={msg.content} />
+                     {msg.intent === 'THINKING' && (
+                       <span style={{
+                         display: 'inline-block', marginLeft: 6,

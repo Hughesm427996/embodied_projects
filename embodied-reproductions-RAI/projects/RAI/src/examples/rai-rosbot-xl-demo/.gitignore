@@ -1,0 +1,18 @@
+# ROS 2
+build/
+install/
+log/
+release/
+
+# IDE files
+.idea/
+.vs/
+.vscode/
+*.swp
+
+# Build artifacts and configurations
+imgui.ini
+CMakeUserPresets.json
+__pycache__
+.DS_Store
+

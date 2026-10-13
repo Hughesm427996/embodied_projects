@@ -1,0 +1,29 @@
+# Python 虚拟环境与缓存
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# 构建产物 / 运行输出
+outputs/
+build/
+dist/
+*.bak
+*.orig
+
+# O3DE / 仿真引擎导出产物（约 3.1GB，可重新生成）
+**/Cache/
+*.GameLauncher
+*.pak
+
+# IDE / 系统
+.idea/
+.vscode/
+.DS_Store
+
+# 密钥与凭据
+*.pem
+.env

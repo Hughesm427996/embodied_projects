@@ -1,0 +1,33 @@
+
+added 187 packages, and audited 188 packages in 1m
+
+39 packages are looking for funding
+  run `npm fund` for details
+
+18 vulnerabilities (2 low, 4 moderate, 12 high)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn allow-scripts   esbuild@0.27.4 (postinstall: node install.js)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+
+> ui@0.0.0 lint
+> eslint .
+
+
+> ui@0.0.0 build
+> vite build
+
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 70 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.48 kB │ gzip:  0.33 kB
+dist/assets/index-BYW2PMWd.css    4.15 kB │ gzip:  1.40 kB
+dist/assets/index-DH7ECHlS.js   316.52 kB │ gzip: 96.47 kB
+✓ built in 1.90s

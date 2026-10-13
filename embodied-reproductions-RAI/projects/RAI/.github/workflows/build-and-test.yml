@@ -1,0 +1,96 @@
+name: build and test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - development
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test-ros2:
+    if: github.event.pull_request.draft == false
+
+    runs-on:
+      - self-hosted
+      - ${{ matrix.ros_distro }}
+
+    continue-on-error: true
+
+    strategy:
+      matrix:
+        ros_distro:
+          - jazzy
+          - humble
+
+    container:
+      image: osrf/ros:${{ matrix.ros_distro }}-desktop-full
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: true
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Create virtual audio device
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get --yes install jackd
+          jackd -d dummy -r 44100 &
+
+      - name: Install python dependencies
+        run: uv sync --all-groups
+
+      - name: Update rosdep
+        shell: bash
+        run: |
+          rosdep update
+
+      - name: Import ros2 dependencies
+        shell: bash
+        run: |
+          vcs import . < ros_deps.repos
+
+      - name: Install ROS 2 package dependencies
+        shell: bash
+        run: |
+          apt-get update
+          rosdep install --from-paths src --ignore-src -r -y
+
+      - name: Build the workspace
+        shell: bash
+        run: |
+          source /opt/ros/${{ matrix.ros_distro }}/setup.bash
+          colcon build
+
+      - name: Run tests
+        shell: bash
+        run: |
+          source setup_shell.sh
+          pytest -m "not billable and not manual" --cov=./src/rai_core --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
+
+      - name: Upload coverage to Codecov
+        if: ${{ matrix.ros_distro == 'jazzy' }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          name: codecov-pytest
+          fail_ci_if_error: false
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() && matrix.ros_distro == 'jazzy' }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

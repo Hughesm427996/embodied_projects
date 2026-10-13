@@ -1,0 +1,14 @@
+{
+  "collected_at": "2026-09-14T18:15:08.816085+08:00",
+  "project_commit": "e01adaa73c38fb10ec4bc5e8c0f71915cc7490a8",
+  "local_patch": "server.py: treat a null LLM action as an empty object",
+  "test_goal": "Read-only status report; no takeoff, movement, or state-changing action",
+  "result": "PASS",
+  "files": [
+    "adapter-status.json",
+    "ai-task-filtered.log",
+    "sensor-status.json",
+    "server-none-action-fix.diff",
+    "system-status.json"
+  ]
+}

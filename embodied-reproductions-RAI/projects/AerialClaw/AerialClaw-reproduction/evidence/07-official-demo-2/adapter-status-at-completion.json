@@ -1,0 +1,17 @@
+{
+  "adapter": "px4",
+  "connected": true,
+  "description": "PX4 SITL via MAVSDK (Gazebo, no AirSim)",
+  "ok": true,
+  "state": {
+    "armed": true,
+    "battery_percent": 68.0,
+    "in_air": true,
+    "mode": "OFFBOARD",
+    "position_ned": [
+      -32.68544116616249,
+      37.74625764787197,
+      -12.808613777160645
+    ]
+  }
+}

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AgentChord | Proactive Failure Recovery for Robotic Manipulation</title>
+  <meta name="title"
+    content="AgentChord: Proactive Failure Recovery through Agentic Task Graph for Robotic Manipulation">
+  <meta name="description"
+    content="Project page for AgentChord, an agentic task graph system for anticipatory robotic failure recovery, with result videos and real-world manipulation demonstrations.">
+  <meta name="keywords"
+    content="robotic manipulation, failure recovery, agentic task graph, bimanual manipulation, robotics">
+  <meta name="author"
+    content="Sheng Xu, Ruixing Jin, Huayi Zhou, Bo Yue, Guanren Qiao, Yueci Deng, Yunxin Tai, Kui Jia, Guiliang Liu">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f5f8fb">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgentChord Project Page">
+  <meta property="og:title" content="AgentChord: Proactive Failure Recovery for Robotic Manipulation">
+  <meta property="og:description"
+    content="Result-focused project page with videos for proactive failure recovery in robotic manipulation.">
+  <meta property="og:url" content="https://edem-ai.github.io/AgentChord">
+  <meta property="og:image" content="static/images/paper/teaser.jpg">
+
+  <meta name="citation_title"
+    content="From Reaction to Anticipation: Proactive Failure Recovery through Agentic Task Graph for Robotic Manipulation">
+  <meta name="citation_author" content="Xu, Sheng">
+  <meta name="citation_author" content="Jin, Ruixing">
+  <meta name="citation_author" content="Zhou, Huayi">
+  <meta name="citation_author" content="Yue, Bo">
+  <meta name="citation_author" content="Qiao, Guanren">
+  <meta name="citation_author" content="Deng, Yueci">
+  <meta name="citation_author" content="Tai, Yunxin">
+  <meta name="citation_author" content="Jia, Kui">
+  <meta name="citation_author" content="Liu, Guiliang">
+  <meta name="citation_publication_date" content="2026">
+
+  <link rel="icon" type="image/jpeg" href="static/images/icon.jpg">
+  <link rel="apple-touch-icon" href="static/images/icon.jpg">
+  <link rel="canonical" href="https://edem-ai.github.io/AgentChord">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script defer src="static/js/index.js"></script>
+</head>
+
+<body id="top">
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">&uarr;</button>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">AgentChord</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#gallery">Videos</a>
+        <a href="#paper">Paper</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="teaser-hero" id="teaser" aria-label="Project video teaser">
+      <div class="teaser-stage">
+        <div class="teaser-grid" aria-hidden="true">
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="2.0"
+              poster="static/images/video-posters/dualpourwater/disturb_after_left-arm_grasping_cup_%28fallen%29.jpg">
+              <source src="static/demos/dualpourwater/disturb_after_left-arm_grasping_cup_%28fallen%29.mp4"
+                type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="2.0"
+              poster="static/images/video-posters/foldtowel/disturb_before_dual-arm_grasping_towel.jpg">
+              <source src="static/demos/foldtowel/disturb_before_dual-arm_grasping_towel.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="3.0"
+              poster="static/images/video-posters/handover/disturb_multiple_times_of_block.jpg">
+              <source src="static/demos/handover/disturb_multiple_times_of_block.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="2.0"
+              poster="static/images/video-posters/rearrangement/fail_%26_retry_multiple_times_of_left-arm_grasping_fork.jpg">
+              <source src="static/demos/rearrangement/fail_%26_retry_multiple_times_of_left-arm_grasping_fork.mp4"
+                type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="3.0"
+              poster="static/images/video-posters/singlepourwater/disturb_multiple_times_of_bottlecup.jpg">
+              <source src="static/demos/singlepourwater/disturb_multiple_times_of_bottlecup.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="2.0"
+              poster="static/images/video-posters/dualpourwater/disturb_after_right-arm_grasping_bottle.jpg">
+              <source src="static/demos/dualpourwater/disturb_after_right-arm_grasping_bottle.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="4.0"
+              poster="static/images/video-posters/dualpourwater/disturb_multiple_times_of_bottlecup_clutter1.jpg">
+              <source src="static/demos/dualpourwater/disturb_multiple_times_of_bottlecup_clutter1.mp4"
+                type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="1.0"
+              poster="static/images/video-posters/setupcoffeetray/disturb_after_dual-arm_grasping_tray.jpg">
+              <source src="static/demos/setupcoffeetray/disturb_after_dual-arm_grasping_tray.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="4.5"
+              poster="static/images/video-posters/dualpourwater/disturb_multiple_times_of_bottlecup_clutter2.jpg">
+              <source src="static/demos/dualpourwater/disturb_multiple_times_of_bottlecup_clutter2.mp4"
+                type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="1.0"
+              poster="static/images/video-posters/singlepourwater/clean.jpg">
+              <source src="static/demos/singlepourwater/clean.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="1.0"
+              poster="static/images/video-posters/dualpourwater/clean.jpg">
+              <source src="static/demos/dualpourwater/clean.mp4" type="video/mp4">
+            </video>
+          </figure>
+          <figure class="teaser-tile">
+            <video autoplay muted loop playsinline preload="metadata" data-start="1.0"
+              poster="static/images/video-posters/rearrangement/clean.jpg">
+              <source src="static/demos/rearrangement/clean.mp4" type="video/mp4">
+            </video>
+          </figure>
+        </div>
+
+        <div class="teaser-overlay">
+          <div class="teaser-copy">
+            <p class="eyebrow">Robotics: Science and Systems 2026</p>
+            <h1>
+              <span>From Reaction to Anticipation</span>
+              <small>Proactive Failure Recovery through Agentic Task Graph for Robotic Manipulation</small>
+            </h1>
+            <p class="tagline">
+              A recovery-aware task-graph system that helps real robots anticipate disturbances,
+              switch to prepared recovery branches, and keep long-horizon manipulation moving.
+            </p>
+            <div class="hero-actions" aria-label="Project shortcuts">
+              <a class="button button-resource button-paper" href="https://arxiv.org/abs/2605.11951" target="_blank"
+                rel="noopener noreferrer">
+                <span class="button-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M7 3h7l4 4v14H7z"></path>
+                    <path d="M14 3v5h5"></path>
+                    <path d="M10 12h6"></path>
+                    <path d="M10 16h6"></path>
+                  </svg>
+                </span>
+                <span>Paper</span>
+                <span class="button-arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="button button-resource button-code" href="https://github.com/EDEM-AI/AgentChord"
+                target="_blank" rel="noopener noreferrer">
+                <span class="button-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="m8 9-4 3 4 3"></path>
+                    <path d="m16 9 4 3-4 3"></path>
+                    <path d="m14 5-4 14"></path>
+                  </svg>
+                </span>
+                <span>Code</span>
+                <span class="button-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper-hero section-shell" id="overview">
+      <div class="container">
+        <div class="paper-heading reveal">
+          <div class="paper-title-mark">
+            <img src="static/images/icon.jpg" alt="AgentChord icon">
+            <span>AgentChord</span>
+          </div>
+          <h2>
+            <span class="paper-title-main">From Reaction to Anticipation:</span>
+            <span class="paper-title-sub">Proactive Failure Recovery through Agentic Task Graph for Robotic
+              Manipulation</span>
+          </h2>
+          <p>
+            AgentChord prepares recovery branches before execution. During rollouts, compiled monitors trigger
+            the right transition immediately, avoiding repeated online re-planning when manipulation tasks are
+            disturbed.
+          </p>
+        </div>
+
+        <div class="author-block reveal">
+          <div class="author-line">
+            <span>Sheng Xu<sup>1</sup></span>
+            <span>Ruixing Jin<sup>1</sup></span>
+            <span>Huayi Zhou<sup>1</sup></span>
+            <span>Bo Yue<sup>1</sup></span>
+            <span>Guanren Qiao<sup>1</sup></span>
+          </div>
+          <div class="author-line">
+            <span>Yueci Deng<sup>1</sup></span>
+            <span>Yunxin Tai<sup>2</sup></span>
+            <span>Kui Jia<sup>1,2</sup></span>
+            <span>Guiliang Liu<sup>1,3,*</sup></span>
+          </div>
+          <div class="affiliations">
+            <div class="affiliation-item">
+              <span class="affiliation-logo-shell">
+                <img src="static/images/logos/cuhk-logo.svg" alt="The Chinese University of Hong Kong, Shenzhen logo">
+              </span>
+              <p><sup>1</sup> The Chinese University of Hong Kong, Shenzhen</p>
+            </div>
+            <div class="affiliation-item">
+              <span class="affiliation-logo-shell affiliation-logo-wide">
+                <img src="static/images/logos/dexforce.svg" alt="DexForce Technology logo">
+              </span>
+              <p><sup>2</sup> DexForce Technology</p>
+            </div>
+            <div class="affiliation-item">
+              <span class="affiliation-logo-shell">
+                <img src="static/images/logos/SLAI.jpg" alt="Shenzhen Loop Area Institute logo">
+              </span>
+              <p><sup>3</sup> Shenzhen Loop Area Institute</p>
+            </div>
+            <p class="affiliation-note"><sup>*</sup> Corresponding author</p>
+          </div>
+        </div>
+
+        <figure class="featured-video overview-showcase reveal" id="showcase">
+          <video controls muted playsinline preload="metadata" poster="static/images/video-posters/video.jpg">
+            <source src="static/demos/video.mp4" type="video/mp4">
+          </video>
+        </figure>
+
+        <div class="paper-story-grid reveal">
+          <article class="abstract-panel">
+            <p class="kicker">Abstract</p>
+            <p>
+              AgentChord treats a manipulation task as a directed task graph, then enriches that graph before execution
+              with failure-specific recovery branches. A composer builds semantic sub-goals, an arranger anticipates
+              likely failures and inserts corrective routes, and a conductor compiles the graph into executable,
+              interruptible transitions with low-latency monitors.
+            </p>
+            <p>
+              During execution, the robot evaluates multimodal geometric and gripper-state signals. When a persistent
+              deviation is detected, AgentChord immediately switches to the corresponding pre-compiled recovery branch
+              instead of re-planning from scratch or backtracking through the task.
+            </p>
+          </article>
+
+          <article class="contribution-panel">
+            <p class="kicker">Contributions</p>
+            <ol class="contribution-list">
+              <li>
+                <strong>Recovery-augmented task graph.</strong>
+                A unified graph representation for task structuring, execution compilation, failure anticipation, and
+                online recovery.
+              </li>
+              <li>
+                <strong>Forward-moving recovery.</strong>
+                Anticipated recovery branches are filtered so they preserve task progress and avoid regressive resets.
+              </li>
+              <li>
+                <strong>Real-world evidence.</strong>
+                Experiments across simulation and six real-world tasks show higher success rates and shorter execution
+                time than reactive recovery baselines.
+              </li>
+            </ol>
+          </article>
+        </div>
+
+        <figure class="paper-figure teaser-figure reveal">
+          <img src="static/images/paper/teaser.jpg"
+            alt="AgentChord overview showing nominal actions, disturbances, and proactive recovery actions"
+            loading="lazy" decoding="async">
+          <figcaption>
+            AgentChord anticipates recovery actions before execution.
+            <span class="caption-blue">Blue</span> trajectories are nominal actions,
+            <span class="caption-red">red</span> marks failures or disturbances, and
+            <span class="caption-pink">pink</span> trajectories are proactive recovery actions prepared by the system.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-shell section-method" id="method">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="kicker">Method</p>
+          <h2>A choreographed agentic task graph</h2>
+          <p>
+            The system separates task reasoning, recovery reasoning, and execution compilation, then brings them back
+            together as a single recovery-aware graph that can be monitored and interrupted online.
+          </p>
+        </div>
+
+        <figure class="paper-figure framework-figure reveal">
+          <img src="static/images/paper/framework.jpg"
+            alt="AgentChord framework with task structuring, recovery orchestration, and execution compilation agents"
+            loading="lazy" decoding="async">
+          <figcaption>
+            The framework constructs a nominal graph, augments it with anticipatory recovery branches, and compiles both
+            nominal and recovery transitions into executable programs with monitors.
+          </figcaption>
+        </figure>
+
+        <div class="agent-role-grid reveal">
+          <article class="role-card role-composer">
+            <p class="role-label">Composer</p>
+            <h3>Task Structuring Agent</h3>
+            <p>Builds the nominal directed graph from the task instruction and initial observations.</p>
+          </article>
+          <article class="role-card role-arranger">
+            <p class="role-label">Arranger</p>
+            <h3>Recovery Orchestration Agent</h3>
+            <p>Predicts likely failure modes, creates online-detectable triggers, and adds recovery branches.</p>
+          </article>
+          <article class="role-card role-conductor">
+            <p class="role-label">Conductor</p>
+            <h3>Execution Compilation Agent</h3>
+            <p>Compiles node keyframes, edge programs, and monitors into interruptible robot behaviors.</p>
+          </article>
+        </div>
+
+        <div class="workflow-grid reveal">
+          <article class="workflow-step">
+            <span>1</span>
+            <h3>Directed task graph</h3>
+            <p>Nodes encode semantic sub-goals. Edges encode constraint-aware motion transitions.</p>
+          </article>
+          <article class="workflow-step">
+            <span>2</span>
+            <h3>Recovery augmentation</h3>
+            <p>Failure modes receive recovery nodes, recovery edges, and feasible downstream merge targets.</p>
+          </article>
+          <article class="workflow-step">
+            <span>3</span>
+            <h3>Hierarchical solvers</h3>
+            <p>Node-level and edge-level constrained solvers realize both nominal and recovery transitions.</p>
+          </article>
+          <article class="workflow-step">
+            <span>4</span>
+            <h3>Compiled monitors</h3>
+            <p>Persistent feature violations trigger immediate switching to a pre-compiled recovery edge.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-results" id="results">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="kicker">Results</p>
+          <h2>Higher success with lower recovery latency</h2>
+          <p>
+            AgentChord is evaluated on simulated disturbances, real-world bimanual manipulation, repeated perturbations,
+            and recovery-aware policy learning.
+          </p>
+        </div>
+
+        <div class="metric-grid result-metrics reveal">
+          <article class="metric-card">
+            <strong>99.2%</strong>
+            <span>Average simulation success rate across three disturbance-heavy tasks.</span>
+          </article>
+          <article class="metric-card">
+            <strong>41.5s</strong>
+            <span>Average simulation execution time, lower than DRM, ReKep, and CaM.</span>
+          </article>
+          <article class="metric-card">
+            <strong>77.5%</strong>
+            <span>Average real-world success rate across six disturbed manipulation tasks.</span>
+          </article>
+          <article class="metric-card">
+            <strong>39/50</strong>
+            <span>Policy success after fine-tuning with AgentChord-generated recovery trajectories.</span>
+          </article>
+        </div>
+
+        <div class="results-board reveal">
+          <article class="result-panel">
+            <div class="result-panel-heading">
+              <p class="kicker">Simulation</p>
+              <h3>Average over three simulation tasks with external disturbances</h3>
+            </div>
+            <table class="paper-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Success</th>
+                  <th>Time</th>
+                  <th>Steps</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>IM</td>
+                  <td>79.2%</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>DRM</td>
+                  <td>92.5%</td>
+                  <td>105.9s</td>
+                  <td>373</td>
+                </tr>
+                <tr>
+                  <td>ReKep</td>
+                  <td>92.5%</td>
+                  <td>54.4s</td>
+                  <td>391</td>
+                </tr>
+                <tr>
+                  <td>CaM</td>
+                  <td>97.5%</td>
+                  <td>78.1s</td>
+                  <td>356</td>
+                </tr>
+                <tr class="table-highlight">
+                  <td>AgentChord</td>
+                  <td>99.2%</td>
+                  <td>41.5s</td>
+                  <td>352</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="result-panel">
+            <div class="result-panel-heading">
+              <p class="kicker">Real World</p>
+              <h3>Average over six long-horizon manipulation tasks with external disturbances</h3>
+            </div>
+            <table class="paper-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Success</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>IM</td>
+                  <td>59.2%</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>DRM</td>
+                  <td>66.7%</td>
+                  <td>143.5s</td>
+                </tr>
+                <tr>
+                  <td>ReKep</td>
+                  <td>65.0%</td>
+                  <td>107.1s</td>
+                </tr>
+                <tr>
+                  <td>CaM</td>
+                  <td>72.5%</td>
+                  <td>130.9s</td>
+                </tr>
+                <tr class="table-highlight">
+                  <td>AgentChord</td>
+                  <td>77.5%</td>
+                  <td>92.2s</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+
+        <div class="supplementary-results reveal">
+          <figure class="paper-figure">
+            <img src="static/images/paper/sim_figures.jpg"
+              alt="Representative AgentChord recovery examples in simulated manipulation tasks" width="2200"
+              height="1481" loading="lazy" decoding="async">
+            <figcaption>Simulation recovery visualizations with object displacement and task continuation.</figcaption>
+          </figure>
+        </div>
+
+        <div class="evidence-grid reveal">
+          <figure class="paper-figure evidence-main">
+            <img src="static/images/paper/main_exp.jpg"
+              alt="AgentChord real-world failure recovery process across six tasks" loading="lazy" decoding="async">
+            <figcaption>
+              Real-world recovery examples across pouring, rearrangement, handover, folding, and tray setup tasks.
+            </figcaption>
+          </figure>
+          <div class="evidence-side">
+            <figure class="paper-figure">
+              <img src="static/images/paper/task_overview.jpg" alt="Object instances for the six evaluation tasks"
+                loading="lazy" decoding="async">
+              <figcaption>Object instances and task settings used for generalization tests.</figcaption>
+            </figure>
+            <figure class="paper-figure">
+              <img src="static/images/paper/many_recovery.jpg"
+                alt="Dual-arm pour water stress test with repeated recovery transitions" loading="lazy"
+                decoding="async">
+              <figcaption>Stress test with repeated disturbances in dual-arm pouring.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="supplementary-results reveal">
+          <figure class="paper-figure">
+            <img src="static/images/paper/real_figures_random.jpg"
+              alt="Initial and final states of AgentChord across real-world tasks with randomized objects and poses"
+              width="2200" height="1285" loading="lazy" decoding="async">
+            <figcaption>Real-world trials across six tasks with varied object instances, poses, and outcomes.
+            </figcaption>
+          </figure>
+          <figure class="paper-figure">
+            <img src="static/images/paper/real_figures_clutter.jpg"
+              alt="Dual-arm pouring results in cluttered tabletop scenes" width="2200" height="1038" loading="lazy"
+              decoding="async">
+            <figcaption>Dual-arm pouring in cluttered scenes with different bottles and target cups.</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section-shell section-alt" id="gallery">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="kicker">Videos</p>
+          <h2>Execution videos in simulation and real-world tasks</h2>
+          <p>Simulation videos are shown first, followed by the real-world execution videos at 3x speed.</p>
+        </div>
+
+        <div class="simulation-videos reveal">
+          <div class="video-group-heading">
+            <p class="kicker">Simulation Rollouts</p>
+            <h3>Agent corrections in simulated manipulation tasks</h3>
+          </div>
+
+          <div class="simulation-grid">
+            <article class="video-card simulation-card">
+              <div class="video-card-copy">
+                <p class="video-label">Single-Arm Pour Water</p>
+                <h3>Recovery from bottle displacement</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/sim_videos/pour_water_agent_correction.jpg">
+                <source src="static/demos/sim_videos/pour_water_agent_correction.mp4" type="video/mp4">
+              </video>
+            </article>
+
+            <article class="video-card simulation-card">
+              <div class="video-card-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Recovery from bottle displacement after grasping</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/sim_videos/pour_water_agent_dual_correction.jpg">
+                <source src="static/demos/sim_videos/pour_water_agent_dual_correction.mp4" type="video/mp4">
+              </video>
+            </article>
+
+            <article class="video-card simulation-card">
+              <div class="video-card-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Recovery from cup fallen after grasping</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/sim_videos/pour_water_agent_dual_correction2.jpg">
+                <source src="static/demos/sim_videos/pour_water_agent_dual_correction2.mp4" type="video/mp4">
+              </video>
+            </article>
+
+            <article class="video-card simulation-card">
+              <div class="video-card-copy">
+                <p class="video-label">Tabletop Rearrangement</p>
+                <h3>Recovery from spoon displacement</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/sim_videos/rearrangement_agent_correction.jpg">
+                <source src="static/demos/sim_videos/rearrangement_agent_correction.mp4" type="video/mp4">
+              </video>
+            </article>
+          </div>
+        </div>
+
+        <div class="video-group-heading real-video-heading reveal">
+          <p class="kicker">Real-World Rollouts</p>
+          <h3>Execution videos in six tasks</h3>
+        </div>
+
+        <div class="video-browser reveal">
+          <aside class="video-browser-nav" aria-label="Video task groups">
+            <button class="task-tab is-active" type="button" data-task="singlepourwater">
+              <span class="task-number">01</span>
+              <span class="task-tab-copy">
+                <small>Single-Arm</small>
+                <strong>Pour Water</strong>
+              </span>
+            </button>
+            <button class="task-tab" type="button" data-task="dualpourwater">
+              <span class="task-number">02</span>
+              <span class="task-tab-copy">
+                <small>Dual-Arm</small>
+                <strong>Pour Water</strong>
+              </span>
+            </button>
+            <button class="task-tab" type="button" data-task="rearrangement">
+              <span class="task-number">03</span>
+              <span class="task-tab-copy">
+                <small>Tabletop</small>
+                <strong>Rearrangement</strong>
+              </span>
+            </button>
+            <button class="task-tab" type="button" data-task="handover">
+              <span class="task-number">04</span>
+              <span class="task-tab-copy">
+                <small>Bimanual</small>
+                <strong>Handover Block</strong>
+              </span>
+            </button>
+            <button class="task-tab" type="button" data-task="foldtowel">
+              <span class="task-number">05</span>
+              <span class="task-tab-copy">
+                <small>Deformable</small>
+                <strong>Fold Towel</strong>
+              </span>
+            </button>
+            <button class="task-tab" type="button" data-task="setupcoffeetray">
+              <span class="task-number">06</span>
+              <span class="task-tab-copy">
+                <small>Long-Horizon</small>
+                <strong>Setup Coffee Tray</strong>
+              </span>
+            </button>
+          </aside>
+
+          <div class="video-browser-main">
+            <article class="task-panel is-active" data-task-panel="singlepourwater">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Pour water into a cup using a single arm.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/singlepourwater/clean.jpg">
+                  <source src="static/demos/singlepourwater/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Single-Arm Pour Water</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Single-arm pour water clips">
+                <button class="clip-button is-active" type="button" data-label="Single-Arm Pour Water"
+                  data-title="Clean rollout" data-description="A reference rollout without external disturbance."
+                  data-src="static/demos/singlepourwater/clean.mp4"
+                  data-poster="static/images/video-posters/singlepourwater/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Single-Arm Pour Water"
+                  data-title="Disturbance after grasping bottle"
+                  data-description="The policy switches into recovery after the bottle pose changes during execution."
+                  data-src="static/demos/singlepourwater/disturb_after_right-arm_grasping_bottle.mp4"
+                  data-poster="static/images/video-posters/singlepourwater/disturb_after_right-arm_grasping_bottle.jpg">After
+                  grasp</button>
+                <button class="clip-button" type="button" data-label="Single-Arm Pour Water"
+                  data-title="Disturbance before grasping bottle"
+                  data-description="The recovery branch handles a bottle disturbance before the grasp is committed."
+                  data-src="static/demos/singlepourwater/disturb_before_right-arm_grasping_bottle.mp4"
+                  data-poster="static/images/video-posters/singlepourwater/disturb_before_right-arm_grasping_bottle.jpg">Before
+                  grasp</button>
+                <button class="clip-button" type="button" data-label="Single-Arm Pour Water"
+                  data-title="Multiple bottle and cup disturbances"
+                  data-description="Repeated perturbations are handled without restarting the task from scratch."
+                  data-src="static/demos/singlepourwater/disturb_multiple_times_of_bottlecup.mp4"
+                  data-poster="static/images/video-posters/singlepourwater/disturb_multiple_times_of_bottlecup.jpg">Multiple</button>
+              </div>
+            </article>
+
+            <article class="task-panel" data-task-panel="dualpourwater">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Pour water into a cup using both arms.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/dualpourwater/clean.jpg">
+                  <source src="static/demos/dualpourwater/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference bimanual pouring rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Dual-arm pour water clips">
+                <button class="clip-button is-active" type="button" data-label="Dual-Arm Pour Water"
+                  data-title="Clean rollout"
+                  data-description="A reference bimanual pouring rollout without external disturbance."
+                  data-src="static/demos/dualpourwater/clean.mp4"
+                  data-poster="static/images/video-posters/dualpourwater/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Dual-Arm Pour Water"
+                  data-title="Cup disturbance after left-arm grasp"
+                  data-description="The robot recovers after the cup is moved during the left-arm grasp stage."
+                  data-src="static/demos/dualpourwater/disturb_after_left-arm_grasping_cup.mp4"
+                  data-poster="static/images/video-posters/dualpourwater/disturb_after_left-arm_grasping_cup.jpg">Cup
+                  moved</button>
+                <button class="clip-button" type="button" data-label="Dual-Arm Pour Water"
+                  data-title="Disturbance after right-arm grasping bottle"
+                  data-description="The robot adapts after the bottle is disturbed during bimanual coordination."
+                  data-src="static/demos/dualpourwater/disturb_after_right-arm_grasping_bottle.mp4"
+                  data-poster="static/images/video-posters/dualpourwater/disturb_after_right-arm_grasping_bottle.jpg">Bottle
+                  moved</button>
+                <button class="clip-button" type="button" data-label="Dual-Arm Pour Water"
+                  data-title="Disturbance before right-arm grasping bottle"
+                  data-description="The recovery branch adapts when the bottle is disturbed before the right-arm grasp."
+                  data-src="static/demos/dualpourwater/disturb_before_right-arm_grasping_bottle.mp4"
+                  data-poster="static/images/video-posters/dualpourwater/disturb_before_right-arm_grasping_bottle.jpg">Before
+                  bottle</button>
+              </div>
+            </article>
+
+            <article class="task-panel" data-task-panel="rearrangement">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Rearrange the fork and spoon beside the plate.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/rearrangement/clean.jpg">
+                  <source src="static/demos/rearrangement/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Rearrange Table</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference rearrangement rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Rearrangement clips">
+                <button class="clip-button is-active" type="button" data-label="Rearrange Table"
+                  data-title="Clean rollout"
+                  data-description="A reference rearrangement rollout without external disturbance."
+                  data-src="static/demos/rearrangement/clean.mp4"
+                  data-poster="static/images/video-posters/rearrangement/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Rearrange Table"
+                  data-title="Recovery before left-arm fork grasp"
+                  data-description="The system redirects execution before a disturbed fork grasp is attempted."
+                  data-src="static/demos/rearrangement/disturb_before_left-arm_grasping_fork.mp4"
+                  data-poster="static/images/video-posters/rearrangement/disturb_before_left-arm_grasping_fork.jpg">Before
+                  fork</button>
+                <button class="clip-button" type="button" data-label="Rearrange Table"
+                  data-title="Fail and retry right-arm spoon grasp"
+                  data-description="A failed grasp is followed by a prepared retry branch."
+                  data-src="static/demos/rearrangement/fail_%26_retry_one_time_of_right-arm_grasping_spoon.mp4"
+                  data-poster="static/images/video-posters/rearrangement/fail_%26_retry_one_time_of_right-arm_grasping_spoon.jpg">Spoon
+                  retry</button>
+                <button class="clip-button" type="button" data-label="Rearrange Table"
+                  data-title="Multiple fork grasp retries"
+                  data-description="The policy retries through multiple recovery opportunities instead of abandoning the task."
+                  data-src="static/demos/rearrangement/fail_%26_retry_multiple_times_of_left-arm_grasping_fork.mp4"
+                  data-poster="static/images/video-posters/rearrangement/fail_%26_retry_multiple_times_of_left-arm_grasping_fork.jpg">Fork
+                  retries</button>
+              </div>
+            </article>
+
+            <article class="task-panel" data-task-panel="handover">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Handover a block from left to right and place it at a specified location.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/handover/clean.jpg">
+                  <source src="static/demos/handover/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Handover Block</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference handover rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Handover clips">
+                <button class="clip-button is-active" type="button" data-label="Handover Block"
+                  data-title="Clean rollout"
+                  data-description="A reference handover rollout without external disturbance."
+                  data-src="static/demos/handover/clean.mp4"
+                  data-poster="static/images/video-posters/handover/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Handover Block"
+                  data-title="Disturbance after right-arm grasp"
+                  data-description="The handover sequence recovers after the block is displaced from the expected state."
+                  data-src="static/demos/handover/disturb_after_right-arm_grasping_block.mp4"
+                  data-poster="static/images/video-posters/handover/disturb_after_right-arm_grasping_block.jpg">Right
+                  grasp</button>
+                <button class="clip-button" type="button" data-label="Handover Block"
+                  data-title="Disturbance after left-arm grasp"
+                  data-description="The task switches recovery branches after a left-arm disturbance."
+                  data-src="static/demos/handover/disturb_after_left-arm_grasping_block.mp4"
+                  data-poster="static/images/video-posters/handover/disturb_after_left-arm_grasping_block.jpg">Left
+                  grasp</button>
+                <button class="clip-button" type="button" data-label="Handover Block"
+                  data-title="Multiple block disturbances"
+                  data-description="Repeated block perturbations are handled within the same handover task."
+                  data-src="static/demos/handover/disturb_multiple_times_of_block.mp4"
+                  data-poster="static/images/video-posters/handover/disturb_multiple_times_of_block.jpg">Multiple</button>
+              </div>
+            </article>
+
+            <article class="task-panel" data-task-panel="foldtowel">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Fold a towel in half.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/foldtowel/clean.jpg">
+                  <source src="static/demos/foldtowel/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Fold Towel</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference towel folding rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Fold towel clips">
+                <button class="clip-button is-active" type="button" data-label="Fold Towel" data-title="Clean rollout"
+                  data-description="A reference towel folding rollout without external disturbance."
+                  data-src="static/demos/foldtowel/clean.mp4"
+                  data-poster="static/images/video-posters/foldtowel/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Fold Towel"
+                  data-title="Rotated towel clean rollout"
+                  data-description="A clean rollout from a rotated towel configuration."
+                  data-src="static/demos/foldtowel/rotated_towel_clean.mp4"
+                  data-poster="static/images/video-posters/foldtowel/rotated_towel_clean.jpg">Rotated</button>
+                <button class="clip-button" type="button" data-label="Fold Towel"
+                  data-title="Disturbance before dual-arm grasp"
+                  data-description="The graph monitors towel state before committing to a bimanual grasp."
+                  data-src="static/demos/foldtowel/disturb_before_dual-arm_grasping_towel.mp4"
+                  data-poster="static/images/video-posters/foldtowel/disturb_before_dual-arm_grasping_towel.jpg">Before
+                  grasp</button>
+                <button class="clip-button" type="button" data-label="Fold Towel"
+                  data-title="Disturbance after left-arm grasp"
+                  data-description="The system repairs the folding sequence after a disturbed left-arm grasp."
+                  data-src="static/demos/foldtowel/disturb_after_left-arm_grasping_towel.mp4"
+                  data-poster="static/images/video-posters/foldtowel/disturb_after_left-arm_grasping_towel.jpg">Left
+                  grasp</button>
+              </div>
+            </article>
+
+            <article class="task-panel" data-task-panel="setupcoffeetray">
+              <div class="task-prompt">
+                <span>Task Prompt</span>
+                <p>Place a coffee capsule in a tray and place it forward.</p>
+              </div>
+              <div class="task-video-frame">
+                <video class="task-video" controls muted playsinline preload="metadata"
+                  poster="static/images/video-posters/setupcoffeetray/clean.jpg">
+                  <source src="static/demos/setupcoffeetray/clean.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="task-panel-copy">
+                <p class="video-label">Setup Coffee Tray</p>
+                <h3>Clean rollout</h3>
+                <p class="task-description">A reference coffee tray setup rollout without external disturbance.</p>
+              </div>
+              <div class="clip-list" aria-label="Setup coffee tray clips">
+                <button class="clip-button is-active" type="button" data-label="Setup Coffee Tray"
+                  data-title="Clean rollout"
+                  data-description="A reference coffee tray setup rollout without external disturbance."
+                  data-src="static/demos/setupcoffeetray/clean.mp4"
+                  data-poster="static/images/video-posters/setupcoffeetray/clean.jpg">Clean</button>
+                <button class="clip-button" type="button" data-label="Setup Coffee Tray"
+                  data-title="Capsule disturbance before grasping"
+                  data-description="A prepared branch handles capsule movement before the grasp stage."
+                  data-src="static/demos/setupcoffeetray/disturb_before_right-arm_grasping_capsule.mp4"
+                  data-poster="static/images/video-posters/setupcoffeetray/disturb_before_right-arm_grasping_capsule.jpg">Before
+                  capsule</button>
+                <button class="clip-button" type="button" data-label="Setup Coffee Tray"
+                  data-title="Capsule disturbance after grasping"
+                  data-description="The rollout recovers when the capsule is displaced after the right-arm grasp."
+                  data-src="static/demos/setupcoffeetray/disturb_after_right-arm_grasping_capsule.mp4"
+                  data-poster="static/images/video-posters/setupcoffeetray/disturb_after_right-arm_grasping_capsule.jpg">After
+                  capsule</button>
+                <button class="clip-button" type="button" data-label="Setup Coffee Tray"
+                  data-title="Tray disturbance after dual-arm grasp"
+                  data-description="A tray-level disturbance triggers a recovery transition during the setup task."
+                  data-src="static/demos/setupcoffeetray/disturb_after_dual-arm_grasping_tray.mp4"
+                  data-poster="static/images/video-posters/setupcoffeetray/disturb_after_dual-arm_grasping_tray.jpg">Tray
+                  moved</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="challenge-videos reveal">
+          <div class="challenge-heading">
+            <p class="kicker">Challenging Settings</p>
+            <h3>Harder recovery cases with fallen objects and clutter scenes</h3>
+          </div>
+
+          <div class="challenge-grid">
+            <article class="video-card">
+              <div class="video-card-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Cup fallen after left-arm grasp</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/dualpourwater/disturb_after_left-arm_grasping_cup_%28fallen%29.jpg">
+                <source src="static/demos/dualpourwater/disturb_after_left-arm_grasping_cup_%28fallen%29.mp4"
+                  type="video/mp4">
+              </video>
+            </article>
+
+            <article class="video-card">
+              <div class="video-card-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Repeated disturbances with clutter I</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/dualpourwater/disturb_multiple_times_of_bottlecup_clutter1.jpg">
+                <source src="static/demos/dualpourwater/disturb_multiple_times_of_bottlecup_clutter1.mp4"
+                  type="video/mp4">
+              </video>
+            </article>
+
+            <article class="video-card">
+              <div class="video-card-copy">
+                <p class="video-label">Dual-Arm Pour Water</p>
+                <h3>Repeated disturbances with clutter II</h3>
+              </div>
+              <video controls muted playsinline preload="metadata"
+                poster="static/images/video-posters/dualpourwater/disturb_multiple_times_of_bottlecup_clutter2.jpg">
+                <source src="static/demos/dualpourwater/disturb_multiple_times_of_bottlecup_clutter2.mp4"
+                  type="video/mp4">
+              </video>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-paper" id="paper">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="kicker">Paper</p>
+          <h2>Read and cite the work</h2>
+          <p>Use the publication link, visit the repository, or copy the BibTeX entry for citation.</p>
+        </div>
+
+        <div class="paper-actions reveal">
+          <a class="button button-dark" href="https://arxiv.org/abs/2605.11951" target="_blank"
+            rel="noopener noreferrer">Open Paper</a>
+          <a class="button button-outline" href="https://github.com/EDEM-AI/AgentChord" target="_blank"
+            rel="noopener noreferrer">Code Repository</a>
+          <button class="button button-outline" onclick="copyBibTeX()" type="button">Copy BibTeX</button>
+        </div>
+
+        <div class="bibtex-card reveal">
+          <pre id="bibtex">@inproceedings{xu2026agentchord,
+  title = {From Reaction to Anticipation: Proactive Failure Recovery through Agentic Task Graph for Robotic Manipulation},
+  author = {Xu, Sheng and Jin, Ruixing and Zhou, Huayi and Yue, Bo and Qiao, Guanren and Deng, Yueci and Tai, Yunxin and Jia, Kui and Liu, Guiliang},
+  booktitle = {Robotics: Science and Systems (RSS)},
+  year = {2026}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>AgentChord project page for real-world recovery results, task videos, and citation details.</p>
+    </div>
+  </footer>
+</body>
+
+</html>

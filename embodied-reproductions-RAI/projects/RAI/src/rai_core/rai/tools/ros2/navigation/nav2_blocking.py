@@ -1,0 +1,165 @@
+# Copyright (C) 2025 Robotec.AI
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from typing import Type
+
+from action_msgs.msg import GoalStatus
+from geometry_msgs.msg import PoseStamped, Quaternion
+from nav2_msgs.action import NavigateToPose
+from pydantic import BaseModel, Field
+from rclpy.action import ActionClient
+from tf_transformations import quaternion_from_euler
+
+from rai.tools.ros2.base import BaseROS2Tool
+from rai.tools.ros2.navigation.bounds import WorkspaceBounds
+
+
+def _get_status_string(status: int) -> str:
+    """Convert GoalStatus to human-readable string.
+
+    Reference: https://github.com/ros2/rcl_interfaces/blob/rolling/action_msgs/msg/GoalStatus.msg
+    """
+    status_map = {
+        GoalStatus.STATUS_UNKNOWN: "UNKNOWN",
+        GoalStatus.STATUS_ACCEPTED: "ACCEPTED",
+        GoalStatus.STATUS_EXECUTING: "EXECUTING",
+        GoalStatus.STATUS_CANCELING: "CANCELING",
+        GoalStatus.STATUS_SUCCEEDED: "SUCCEEDED",
+        GoalStatus.STATUS_CANCELED: "CANCELED",
+        GoalStatus.STATUS_ABORTED: "ABORTED",
+    }
+    return status_map.get(status, f"UNKNOWN_STATUS_{status}")
+
+
+def _get_error_message(result_response) -> str:
+    """Extract error message from NavigateToPose result response.
+
+    Args:
+        result_response: GetResultService.Response containing status and result fields
+            - status (int8): GoalStatus value (how action ended)
+            - result.error_msg (string): Nav2 error details (why it failed)
+    """
+    status_str = _get_status_string(result_response.status)
+
+    if result_response.result.error_msg:
+        return f"Status: {status_str}. {result_response.result.error_msg}"
+
+    return f"Status: {status_str}"
+
+
+class GetCurrentPoseToolInput(BaseModel):
+    pass
+
+
+class GetCurrentPoseTool(BaseROS2Tool):
+    name: str = "get_current_pose"
+    description: str = "Get the current pose of the robot"
+    frame_id: str = Field(
+        default="map", description="The frame id of the Nav2 stack (map, odom, etc.)"
+    )
+    robot_frame_id: str = Field(
+        default="base_link",
+        description="The frame id of the robot's base frame (base_link, base_footprint, etc.)",
+    )
+    args_schema: Type[GetCurrentPoseToolInput] = GetCurrentPoseToolInput
+
+    def _run(self) -> str:
+        transform_stamped = self.connector.get_transform(
+            self.frame_id, self.robot_frame_id
+        )
+        return str(transform_stamped)
+
+
+class NavigateToPoseBlockingToolInput(BaseModel):
+    x: float = Field(
+        ..., allow_inf_nan=False, description="The x coordinate of the pose"
+    )
+    y: float = Field(
+        ..., allow_inf_nan=False, description="The y coordinate of the pose"
+    )
+    z: float = Field(
+        ..., allow_inf_nan=False, description="The z coordinate of the pose"
+    )
+    yaw: float = Field(
+        ..., allow_inf_nan=False, description="The yaw angle of the pose"
+    )
+
+
+class NavigateToPoseBlockingTool(WorkspaceBounds, BaseROS2Tool):
+    name: str = "navigate_to_pose_blocking"
+    description: str = "Navigate to a specific pose"
+    frame_id: str = Field(
+        default="map", description="The frame id of the Nav2 stack (map, odom, etc.)"
+    )
+    action_name: str = Field(
+        default="navigate_to_pose", description="The name of the Nav2 action"
+    )
+    args_schema: Type[NavigateToPoseBlockingToolInput] = NavigateToPoseBlockingToolInput
+
+    def _run(self, x: float, y: float, z: float, yaw: float) -> str:
+        self.reject_out_of_bounds(x, y, z)
+        action_client = ActionClient(
+            self.connector.node, NavigateToPose, self.action_name
+        )
+
+        pose = PoseStamped()
+        pose.header.frame_id = self.frame_id
+        pose.header.stamp = self.connector.node.get_clock().now().to_msg()
+        pose.pose.position.x = x
+        pose.pose.position.y = y
+        pose.pose.position.z = z
+        quat = quaternion_from_euler(0, 0, yaw)
+        pose.pose.orientation = Quaternion(x=quat[0], y=quat[1], z=quat[2], w=quat[3])
+
+        goal = NavigateToPose.Goal()
+        goal.pose = pose
+
+        try:
+            result_response = action_client.send_goal(goal)
+        except Exception as e:
+            return f"Navigate to pose action failed with exception: {type(e).__name__}: {e}"
+
+        if result_response is None:
+            return "Navigate to pose action failed. Please try again."
+
+        # Validate response structure for debugging
+        try:
+            # Check status field (used for success/failure)
+            if not hasattr(result_response, "status"):
+                return (
+                    f"Navigate to pose action failed. Response missing 'status' field. "
+                    f"Response type: {type(result_response).__name__}"
+                )
+
+            # Check error_code field (original error source)
+            if hasattr(result_response, "result") and not hasattr(
+                result_response.result, "error_code"
+            ):
+                return (
+                    f"Navigate to pose action failed. Result missing 'error_code' field. "
+                    f"Result type: {type(result_response.result).__name__}"
+                )
+
+            # Check goal status (SUCCEEDED = 4)
+            if result_response.status != GoalStatus.STATUS_SUCCEEDED:
+                error_msg = _get_error_message(result_response)
+                return f"Navigate to pose action failed. {error_msg}"
+
+        except AttributeError as e:
+            return (
+                f"Navigate to pose action failed. AttributeError: {e}. "
+                f"Response type: {type(result_response).__name__}"
+            )
+
+        return "Navigate to pose successful."

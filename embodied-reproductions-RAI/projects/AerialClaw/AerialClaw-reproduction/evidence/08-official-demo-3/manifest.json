@@ -1,0 +1,49 @@
+{
+  "collected_at": "2026-09-16T13:42:53.771488+08:00",
+  "official_task": "飞到东南废墟区上空，在NED(-30,40)、(-50,60)、(-25,55)三个点各停留观察一次，记录地面物体颜色和形状，返航汇总报告",
+  "planner": "DeepSeek deepseek-chat",
+  "vision": "Doubao Ark endpoint ep-20260818223702-6gbfx",
+  "result": "PASS",
+  "verified_marker_counts": {
+    "takeoff → OK": 1,
+    "fly_to → OK": 3,
+    "observe → OK": 3,
+    "report → OK": 4,
+    "return_to_launch → OK": 1,
+    "目标达成": 1
+  },
+  "observation_points_ned": [
+    [
+      -30,
+      40
+    ],
+    [
+      -50,
+      60
+    ],
+    [
+      -25,
+      55
+    ]
+  ],
+  "final_px4_state": {
+    "armed": false,
+    "battery_percent": 100.0,
+    "in_air": false,
+    "mode": "HOLD",
+    "position_ned": [
+      -32.43659320473671,
+      37.691295489668846,
+      -2.621702194213867
+    ]
+  },
+  "files": [
+    "adapter-status-final.json",
+    "down-camera-final.jpg",
+    "front-camera-final.jpg",
+    "official-demo-3.log",
+    "patrol_report_20260916_134130.html",
+    "sensor-status-final.json",
+    "system-status-final.json"
+  ]
+}

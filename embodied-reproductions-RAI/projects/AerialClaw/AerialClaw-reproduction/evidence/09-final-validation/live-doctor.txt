@@ -1,0 +1,81 @@
+============================================================
+ AerialClaw PX4/Gazebo Doctor
+ Project: /home/user/AerialClaw
+ PX4_DIR: /home/user/AerialClaw/PX4-Autopilot
+ World:   urban_rescue
+ Model:   x500_lidar_2d_cam
+ Live:    1
+============================================================
+
+[INFO] 1/7 Checking host tools
+[PASS] git found: /usr/bin/git
+[PASS] cmake found: /usr/bin/cmake
+[PASS] python3 found: /home/user/AerialClaw/venv/bin/python3
+[PASS] Gazebo CLI found: Gazebo Sim, version 8.15.0
+
+[INFO] 2/7 Checking PX4 checkout and build
+[PASS] PX4 checkout exists
+[PASS] PX4 SITL binary exists: /home/user/AerialClaw/PX4-Autopilot/build/px4_sitl_default/bin/px4
+[PASS] PX4 Gazebo worlds directory exists
+[PASS] PX4 Gazebo models directory exists
+
+[INFO] 3/7 Checking AerialClaw world/model assets
+[PASS] Repository world source exists: sim/worlds/urban_rescue.sdf
+[PASS] World installed into PX4: /home/user/AerialClaw/PX4-Autopilot/Tools/simulation/gz/worlds/urban_rescue.sdf
+[PASS] Repository model source exists: sim/models/x500_lidar_2d_cam
+[PASS] AerialClaw model defines sensor: cam_front
+[PASS] AerialClaw model defines sensor: cam_rear
+[PASS] AerialClaw model defines sensor: cam_left
+[PASS] AerialClaw model defines sensor: cam_right
+[PASS] AerialClaw model defines sensor: cam_down
+[PASS] AerialClaw model defines sensor: lidar_2d
+[PASS] Gazebo can likely resolve model 'x500_lidar_2d_cam'
+
+[INFO] 4/7 Checking runtime dependencies
+[PASS] MicroXRCEAgent found: /usr/local/bin/MicroXRCEAgent
+[PASS] python module 'mavsdk' importable
+
+[INFO] 5/7 Checking AerialClaw server path
+[PASS] server.py exists
+[PASS] Gazebo sensor bridge exists
+
+[INFO] 6/7 Suggested commands
+  Setup once:      ./scripts/setup_px4.sh
+  Research demo:   ./scripts/sim_quickstart.sh
+  Start sim:       ./scripts/start_sim.sh urban_rescue x500_lidar_2d_cam
+  Start backend:   SIM_ADAPTER=px4 PX4_GZ_WORLD=urban_rescue PX4_SIM_MODEL=x500_lidar_2d_cam python server.py
+  Status checks:   curl http://localhost:5001/api/status && curl http://localhost:5001/api/sensor/status
+  Logs:            /tmp/aerialclaw_dds.log /tmp/aerialclaw_gz.log /tmp/aerialclaw_px4.log
+
+[INFO] 7/7 Live simulation checks
+[PASS] MicroXRCEAgent appears to be running
+[PASS] Gazebo process appears to be running
+[PASS] PX4 SITL process appears to be running
+[PASS] MAVSDK/Offboard UDP port 14540 appears active
+[PASS] Gazebo sensor topics detected
+    /model/x500_lidar_2d_cam_0/command/motor_speed
+    /model/x500_lidar_2d_cam_0/servo_0
+    /model/x500_lidar_2d_cam_0/servo_1
+    /model/x500_lidar_2d_cam_0/servo_2
+    /model/x500_lidar_2d_cam_0/servo_3
+    /model/x500_lidar_2d_cam_0/servo_4
+    /model/x500_lidar_2d_cam_0/servo_5
+    /model/x500_lidar_2d_cam_0/servo_6
+    /model/x500_lidar_2d_cam_0/servo_7
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/base_link/sensor/air_pressure_sensor/air_pressure
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/base_link/sensor/imu_sensor/imu
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/base_link/sensor/navsat_sensor/navsat
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_down_link/sensor/cam_down/camera_info
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_down_link/sensor/cam_down/image
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_front_link/sensor/cam_front/camera_info
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_front_link/sensor/cam_front/image
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_left_link/sensor/cam_left/camera_info
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_left_link/sensor/cam_left/image
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_rear_link/sensor/cam_rear/camera_info
+    /world/urban_rescue/model/x500_lidar_2d_cam_0/link/cam_rear_link/sensor/cam_rear/image
+
+============================================================
+Summary: 27 pass, 0 warn, 0 fail
+============================================================
+
+Doctor passed. Gazebo/PX4 path is ready to try.
