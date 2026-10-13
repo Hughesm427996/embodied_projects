@@ -27,3 +27,6 @@ dist/
 # 密钥与凭据
 *.pem
 .env
+
+# 暂不纳入总仓库的独立项目（自带独立 .git，单独管理）
+RoboAgent_CVPR26/
